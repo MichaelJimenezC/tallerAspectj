@@ -37,4 +37,11 @@ public aspect Logger {
 		User user = (User)thisJoinPoint.getArgs()[0];
 		recordAction("Log.txt", user, "Sesion iniciada");
 		}
+	
+	pointcut logoutUser() : call(* com.bettinghouse.BettingHouse.effectiveLogOut(..));
+	after() returning : logoutUser() {
+		User user = (User)thisJoinPoint.getArgs()[0];
+		recordAction("Log.txt", user, "Sesion cerrada");
+		}
+
 }
