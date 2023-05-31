@@ -30,5 +30,11 @@ public aspect Logger {
 		} catch (IOException e) {
 		e.printStackTrace();
 		}
+	}
+	
+	pointcut loginUser() : call(* com.bettinghouse.BettingHouse.effectiveLogIn(..));
+	after() returning : loginUser() {
+		User user = (User)thisJoinPoint.getArgs()[0];
+		recordAction("Log.txt", user, "Sesion iniciada");
 		}
 }
